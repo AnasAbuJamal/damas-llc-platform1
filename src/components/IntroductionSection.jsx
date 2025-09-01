@@ -7,7 +7,7 @@ export const IntroductionSection = () => {
     <Box id='about' sx={{ width: "100%", py: { xs: 18, md: 6 }, display: 'flex', justifyContent: 'center' }}>
       <Grid container sx={{ maxWidth: 1104, width: '100%', px: 2, alignItems: 'center' }}>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box
             component="img"
             src={aboutInterior}
@@ -22,7 +22,7 @@ export const IntroductionSection = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ pl: { xs: 0, md: 8 }, pt: { xs: 5, md: 0 }, maxWidth: 470 }}>
             <Box sx={{ mb: 3 }}>
               <Typography

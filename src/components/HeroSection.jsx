@@ -7,7 +7,7 @@ export const HeroSection = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
-    details: ''
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,19 +22,29 @@ export const HeroSection = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const lastSubmission = localStorage.getItem('lastSubmissionTime');
+    const now = new Date().getTime();
+
+    if (lastSubmission && (now - lastSubmission < 24 * 60 * 60 * 1000)) {
+      alert('You have already sent a message today. Please try again tomorrow.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     const templateParams = {
       name: formState.name,
       email: formState.email,
-      details: formState.details
+      message: formState.message
     };
 
     emailjs.send(serviceId, templateId, templateParams, publicKey)
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
         alert('Thank you! Your message has been sent.');
-        setFormState({ name: '', email: '', details: '' }); 
+        setFormState({ name: '', email: '', message: '' });
+        localStorage.setItem('lastSubmissionTime', now);
         setIsSubmitting(false);
       }, (error) => {
         console.log('FAILED...', error);
@@ -75,12 +85,12 @@ export const HeroSection = () => {
             onChange={handleChange}
           />
           <StyledTextField
-            id="details"
-            name="details" 
+            id="message"
+            name="message" 
             label="Tell us about your project..."
             multiline
             rows={4}
-            value={formState.details}
+            value={formState.message}
             onChange={handleChange}
           />
           <Button
@@ -103,5 +113,3 @@ export const HeroSection = () => {
     </Box>
   );
 };
-
-
